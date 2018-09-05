@@ -11,10 +11,16 @@
 
     if (isset($_POST['inscription'])){
         if(!empty($_POST['pseudo']) AND !empty($_POST['mail']) AND !empty($_POST['pass']) AND !empty($_POST['confpass'])){
+
+            $pseudo = $_POST['pseudo'];
+            $mdp = $_POST['pass'];
+            $mail = $_POST['mail'];
+
+            $reqinscri = $bdd->prepare("INSERT INTO membres(pseudo, mdp, mail) VALUES(?, ?, ?)");
+            $reqinscri->execute(array($pseudo, $mdp, $mail));
             echo "ok";
         } else {
             $erreur = "pas ok";
-            echo $erreur;
         }
     }
 ?>
@@ -27,5 +33,13 @@
     <input type="password" name="confpass" id="" placeholder="Confirm pass"><br>
     <input type="submit" name="inscription" value="ENVOYER">
  </form>
+ <?php 
+    if(isset($erreur)) { 
+     echo $erreur;
+    };
+ 
+ 
+ ?>
+
 </body>
 </html>
